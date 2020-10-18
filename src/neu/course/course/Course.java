@@ -1,23 +1,39 @@
 package neu.course.course;
 
-public class Course {
+public class Course implements Comparable<Course> {
     // 课程编号
-    private int id;
+    protected int id;
     // 课程名称
-    private String name;
+    protected String name;
     // 课程种类（是否为选修）
-    private boolean isElective;
+    protected boolean isElective;
+    // 任课教师
+    protected String teacher;
+    // 选课人数
+    protected int count;
 
-    public Course(int id, String name, boolean isElective) {
+    public Course(int id, String name, boolean isElective, String teacher, int count) {
         this.id = id;
         this.name = name;
         this.isElective = isElective;
+        this.teacher = teacher;
+        this.count = count;
     }
 
-    // 覆盖父类的toString方法用于输出
+    // 覆盖父类的toString方法用于保存
     @Override
     public String toString() {
-        String type = this.isElective ? "选修" : "必修";
-        return String.format("%8d %10s %10s", this.id, this.name, type);
+        return String.format("%d %s %b %s %d", this.id, this.name, this.isElective, this.teacher, this.count);
+    }
+
+    public void show() {
+        String type = isElective ? "选修" : "必修";
+        System.out.printf("%-6d\t\t%-10s\t%-6s\t%-6s\t%-4d\t\n", this.id, this.name, type, this.teacher, this.count);
+    }
+
+    // 覆盖实现比较方法
+    @Override
+    public int compareTo(Course toCompare) {
+        return toCompare.count - this.count;
     }
 }
