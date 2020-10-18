@@ -35,6 +35,17 @@ public class Courses {
         }
     }
 
+    // 用教师姓名查找所授课信息
+    public static void searchCourseByTeacher() {
+        System.out.println("请输入需要查找的教师名称：");
+        String name = stdIn.next();
+        for (Course item : list) {
+            if (item.getTeacherName().equals(name)) {
+                item.show();
+            }
+        }
+    }
+
     // 使用选课人数对课程进行排序
     public static void sortCourses() {
         // Course类实现了Comparable接口，直接使用sort方法进行排序

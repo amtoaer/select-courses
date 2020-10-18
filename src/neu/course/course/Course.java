@@ -36,4 +36,8 @@ public class Course implements Comparable<Course> {
     public int compareTo(Course toCompare) {
         return toCompare.count - this.count;
     }
+
+    public String getTeacherName() {
+        return this.teacher;
+    }
 }
