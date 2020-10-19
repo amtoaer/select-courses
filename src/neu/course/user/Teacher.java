@@ -1,7 +1,5 @@
 package neu.course.user;
 
-import java.util.Scanner;
-
 // 教师类继承用户类
 public class Teacher extends User {
     // 工号
@@ -21,16 +19,17 @@ public class Teacher extends User {
     }
 
     @Override
-    public boolean login() {
-        System.out.println("请输入工号：");
-        Scanner input = new Scanner(System.in);
-        int workID = input.nextInt();
-        System.out.println("请输入密码：");
-        String pass = input.next();
-        input.close();
-        if (workID == this.workID && pass.equals(this.pass)) {
-            return true;
-        }
-        return false;
+    public String show() {
+        return String.format("%d %s %s", this.workID, this.name, this.level);
+    }
+
+    @Override
+    public void showHelloMessage() {
+        System.out.printf("%s %s 你好\n", this.name, this.level);
+    }
+
+    // TODO: 教师菜单
+    @Override
+    public void showMenu() {
     }
 }

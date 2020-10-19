@@ -29,5 +29,11 @@ public abstract class User {
     }
 
     // 登陆
-    public abstract boolean login();
+    public abstract void showHelloMessage();
+
+    // 返回用于输出的字符串
+    public abstract String show();
+
+    // 显示特定用户级别的菜单
+    public abstract void showMenu();
 }

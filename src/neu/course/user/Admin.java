@@ -1,21 +1,23 @@
 package neu.course.user;
 
-import java.util.Scanner;
-
 public class Admin extends User {
     public Admin(String name, String pass) {
         super(name, pass);
     }
 
     @Override
-    public boolean login() {
-        System.out.println("请输入管理员密码：");
-        Scanner input = new Scanner(System.in);
-        String pass = input.next();
-        input.close();
-        if (pass.equals(this.pass)) {
-            return true;
-        }
-        return false;
+    public void showHelloMessage() {
+        System.out.printf("管理员%s，你好\n", this.name);
+    }
+
+    // 管理员只有一个，没有展示的需要，因此此处为空函数
+    @Override
+    public String show() {
+        return "";
+    }
+
+    // TODO: 管理员菜单
+    @Override
+    public void showMenu() {
     }
 }

@@ -41,7 +41,7 @@ public class Courses {
         String name = stdIn.next();
         for (Course item : list) {
             if (item.getTeacherName().equals(name)) {
-                item.show();
+                System.out.println(item.show());
             }
         }
     }

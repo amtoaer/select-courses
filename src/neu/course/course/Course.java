@@ -26,9 +26,9 @@ public class Course implements Comparable<Course> {
         return String.format("%d %s %b %s %d", this.id, this.name, this.isElective, this.teacher, this.count);
     }
 
-    public void show() {
+    public String show() {
         String type = isElective ? "选修" : "必修";
-        System.out.printf("%-6d\t\t%-10s\t%-6s\t%-6s\t%-4d\t\n", this.id, this.name, type, this.teacher, this.count);
+        return String.format("%-6d\t\t%-10s\t%-6s\t%-6s\t%-4d\t", this.id, this.name, type, this.teacher, this.count);
     }
 
     // 覆盖实现比较方法
