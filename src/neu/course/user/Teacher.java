@@ -28,6 +28,13 @@ public class Teacher extends User {
         System.out.printf("%s %s 你好\n", this.name, this.level);
     }
 
+    public boolean login(int workID, String pass) {
+        if (this.workID == workID && this.pass.equals(pass)) {
+            return true;
+        }
+        return false;
+    }
+
     // TODO: 教师菜单
     @Override
     public void showMenu() {

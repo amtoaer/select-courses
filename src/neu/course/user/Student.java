@@ -28,6 +28,13 @@ public class Student extends User {
         System.out.printf("%s %s 你好\n", this.grade, this.name);
     }
 
+    public boolean login(int id, String pass) {
+        if (this.id == id && this.pass.equals(pass)) {
+            return true;
+        }
+        return false;
+    }
+
     // TODO: 学生菜单
     @Override
     public void showMenu() {

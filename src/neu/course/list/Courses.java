@@ -11,12 +11,12 @@ public class Courses {
     private static Scanner stdIn = new Scanner(System.in);
 
     // 手动输入，添加一节课
-    public static void addCourse() {
+    public static void add() {
         innerAddCourse(stdIn);
     }
 
     // 手动输入，添加多节课
-    public static void addCourses() {
+    public static void multiAdd() {
         int i = 1;
         String choice = "n";
         do {
@@ -27,16 +27,22 @@ public class Courses {
         } while ("y".equals(choice));
     }
 
+    public static void del() {
+    }
+
+    public static void multiDel() {
+    }
+
     // 格式化输出课程列表
-    public static void showCourses() {
-        System.out.printf("%-6s\t%-10s\t%-6s\t%-6s\t%-4s\t\n", "编号", "课程", "类型", "教师", "选课人数");
+    public static void show() {
+        System.out.printf("%-6s\t%-10s\t\t%-6s\t%-6s\t%-4s\t\n", "编号", "课程", "类型", "教师", "选课人数");
         for (Course item : list) {
-            item.show();
+            System.out.println(item.show());
         }
     }
 
     // 用教师姓名查找所授课信息
-    public static void searchCourseByTeacher() {
+    public static void searchByTeacher() {
         System.out.println("请输入需要查找的教师名称：");
         String name = stdIn.next();
         for (Course item : list) {
@@ -47,7 +53,7 @@ public class Courses {
     }
 
     // 使用选课人数对课程进行排序
-    public static void sortCourses() {
+    public static void sort() {
         // Course类实现了Comparable接口，直接使用sort方法进行排序
         list.sort(null);
     }

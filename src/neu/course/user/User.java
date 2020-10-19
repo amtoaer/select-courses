@@ -9,6 +9,8 @@ public abstract class User {
     // 密码
     protected String pass;
 
+    protected Scanner stdIn = new Scanner(System.in);
+
     public User(String name, String pass) {
         this.name = name;
         this.pass = pass;
