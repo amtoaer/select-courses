@@ -13,6 +13,10 @@ public class Student extends User {
         this.grade = grade;
     }
 
+    public int getID() {
+        return this.id;
+    }
+
     @Override
     public String toString() {
         return String.format("%d %s %s", this.id, this.name, this.grade);
@@ -26,13 +30,6 @@ public class Student extends User {
     @Override
     public void showHelloMessage() {
         System.out.printf("%s %s 你好\n", this.grade, this.name);
-    }
-
-    public boolean login(int id, String pass) {
-        if (this.id == id && this.pass.equals(pass)) {
-            return true;
-        }
-        return false;
     }
 
     // TODO: 学生菜单

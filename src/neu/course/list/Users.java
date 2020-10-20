@@ -28,6 +28,30 @@ public class Users {
         }
     }
 
+    public static User locateStudent() {
+        System.out.println("请输入学号：");
+        int id = stdIn.nextInt();
+        for (Student item : students) {
+            if (item.getID() == id) {
+                return item;
+            }
+        }
+        System.out.println("学号不存在，请重新输入");
+        return null;
+    }
+
+    public static User locateTeacher() {
+        System.out.println("请输入工号：");
+        int workID = stdIn.nextInt();
+        for (Teacher item : teachers) {
+            if (item.getWorkID() == workID) {
+                return item;
+            }
+        }
+        System.out.println("工号不存在，请重新输入");
+        return null;
+    }
+
     // 登陆菜单
     public static void showMenu() {
         System.out.println("""
@@ -54,7 +78,7 @@ public class Users {
     private static User adminLogin() {
         System.out.println("请输入管理员密码：");
         String pass = stdIn.next();
-        if (pass.equals("amtoaer!")) {
+        if (admin.login(pass)) {
             admin.showHelloMessage();
             return admin;
         }
@@ -64,33 +88,33 @@ public class Users {
 
     // 教师登陆
     private static User teacherLogin() {
-        System.out.println("请输入工号：");
-        int workID = stdIn.nextInt();
-        System.out.println("请输入密码：");
-        String pass = stdIn.next();
-        for (Teacher item : teachers) {
-            if (item.login(workID, pass)) {
-                item.showHelloMessage();
+        User item = locateTeacher();
+        if (item != null) {
+            System.out.println("请输入密码：");
+            String pass = stdIn.next();
+            if (item.login(pass)) {
                 return item;
+            } else {
+                System.out.println("密码错误，请重试");
+                return null;
             }
         }
-        System.out.println("登陆失败，请重试");
         return null;
     }
 
     // 学生登陆
     private static User studentLogin() {
-        System.out.println("请输入学号：");
-        int id = stdIn.nextInt();
-        System.out.println("请输入密码：");
-        String pass = stdIn.next();
-        for (Student item : students) {
-            if (item.login(id, pass)) {
-                item.showHelloMessage();
+        User item = locateStudent();
+        if (item != null) {
+            System.out.println("请输入密码：");
+            String pass = stdIn.next();
+            if (item.login(pass)) {
                 return item;
+            } else {
+                System.out.println("密码错误，请重试");
+                return null;
             }
         }
-        System.out.println("登陆失败，请重试");
         return null;
     }
 

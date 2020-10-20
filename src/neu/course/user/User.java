@@ -30,6 +30,18 @@ public abstract class User {
         this.pass = first;
     }
 
+    public void resetPassword() {
+        this.pass = "123456";
+    }
+
+    // 判断登陆是否成功
+    public boolean login(String pass) {
+        if (pass.equals(this.pass)) {
+            return true;
+        }
+        return false;
+    }
+
     // 登陆
     public abstract void showHelloMessage();
 
