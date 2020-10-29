@@ -1,7 +1,5 @@
 package neu.course.user;
 
-import java.util.Scanner;
-
 import neu.course.list.Courses;
 import neu.course.list.Pairs;
 
