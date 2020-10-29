@@ -35,7 +35,8 @@ public class Admin extends User {
                     10. 添加老师
                     11. 添加学生
                     12. 删除老师
-                    13. 删除学生""");
+                    13. 删除学生
+                    14. 退出""");
             int choice = stdIn.nextInt();
             switch (choice) {
                 case 1 -> Courses.multiAdd();
@@ -67,6 +68,9 @@ public class Admin extends User {
                 }
                 case 13 -> {
                     Users.deleteStudents();
+                }
+                case 14 -> {
+                    return;
                 }
             }
         }

@@ -1,5 +1,7 @@
 package neu.course.user;
 
+import neu.course.list.Pairs;
+
 // 教师类继承用户类
 public class Teacher extends User {
     // 工号
@@ -35,5 +37,25 @@ public class Teacher extends User {
     // TODO: 教师菜单
     @Override
     public void showMenu() {
+        while (true) {
+            System.out.println("""
+                    1. 修改登陆密码
+                    2. 查看教授课程
+                    3. 选修课选课
+                    4. 退出""");
+            int choice = stdIn.nextInt();
+            switch (choice) {
+                case 1 -> this.resetPassword();
+                case 2 -> {
+                    Pairs.showTaughtCourses(this.workID);
+                }
+                case 3 -> {
+
+                }
+                case 4 -> {
+                    return;
+                }
+            }
+        }
     }
 }

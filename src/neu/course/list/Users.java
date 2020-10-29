@@ -82,6 +82,15 @@ public class Users {
         return null;
     }
 
+    public static User locateStudent(int uid) {
+        for (Student item : students) {
+            if (item.getID() == uid) {
+                return item;
+            }
+        }
+        return null;
+    }
+
     public static void deleteTeachers() {
         String choice = "y";
         while (choice.equals("y")) {
@@ -121,8 +130,8 @@ public class Users {
                 1. 管理员
                 2. 教师
                 3. 学生""");
+        int choice = stdIn.nextInt();
         do {
-            int choice = stdIn.nextInt();
             currentUser = switch (choice) {
                 case 1 -> adminLogin();
                 case 2 -> teacherLogin();

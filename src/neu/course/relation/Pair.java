@@ -25,4 +25,17 @@ public class Pair {
     public String toString() {
         return String.format("%d %d\n", this.first, this.last);
     }
+
+    // 用于判断是否已经选修过这门课
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Pair) {
+            Pair tmp = (Pair) obj;
+            if (this.first == tmp.first && this.last == tmp.last) {
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
 }
