@@ -1,6 +1,7 @@
 package neu.course.course;
 
 public class OptionalCourse extends Course {
+    // 最大选课人数
     private int maxStudentCount;
 
     public OptionalCourse(int id, String name, boolean isElective, String teacher, int count, int maxStudentCount) {

@@ -19,7 +19,6 @@ public class Admin extends User {
         return "";
     }
 
-    // TODO: 管理员菜单
     @Override
     public void showMenu() {
         while (true) {
@@ -56,6 +55,18 @@ public class Admin extends User {
                     if (teacher != null) {
                         teacher.resetPassword();
                     }
+                }
+                case 10 -> {
+                    Users.addTeachers();
+                }
+                case 11 -> {
+                    Users.addStudents();
+                }
+                case 12 -> {
+                    Users.deleteTeachers();
+                }
+                case 13 -> {
+                    Users.deleteStudents();
                 }
             }
         }

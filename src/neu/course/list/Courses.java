@@ -10,11 +10,6 @@ public class Courses {
 
     private static Scanner stdIn = new Scanner(System.in);
 
-    // 手动输入，添加一节课
-    public static void add() {
-        innerAddCourse(stdIn);
-    }
-
     // 手动输入，添加多节课
     public static void multiAdd() {
         int i = 1;
@@ -25,9 +20,6 @@ public class Courses {
             System.out.println("是否继续？（y/n）");
             choice = stdIn.next();
         } while ("y".equals(choice));
-    }
-
-    public static void del() {
     }
 
     public static void multiDel() {
@@ -63,7 +55,7 @@ public class Courses {
         int id = list.size() + 1;
         String name, teacher;
         boolean isElective;
-        int count;
+        int count, maxCount;
         // 从标准输入中读取时才需要输出提示信息
         if (stdIn.equals(input)) {
             System.out.println("请输入课程名：");
@@ -74,13 +66,25 @@ public class Courses {
             teacher = input.next();
             System.out.println("请输入选课人数：");
             count = input.nextInt();
+            if (isElective) {
+                System.out.println("请输入最大选课人数：");
+                maxCount = input.nextInt();
+                list.add(new OptionalCourse(id, name, isElective, teacher, count, maxCount));
+            } else {
+                list.add(new Course(id, name, isElective, teacher, count));
+            }
         } else {
             // 否则不输出提示信息，直接进行读取
             name = input.next();
             isElective = input.nextBoolean();
             teacher = input.next();
             count = input.nextInt();
+            if (isElective) {
+                maxCount = input.nextInt();
+                list.add(new OptionalCourse(id, name, isElective, teacher, count, maxCount));
+            } else {
+                list.add(new Course(id, name, isElective, teacher, count));
+            }
         }
-        list.add(new Course(id, name, isElective, teacher, count));
     }
 }

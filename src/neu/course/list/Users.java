@@ -28,6 +28,48 @@ public class Users {
         }
     }
 
+    public static void addTeachers() {
+        int i = 1;
+        String choice = "n";
+        do {
+            System.out.printf("请输入第%d个教师信息\n", i++);
+            innerAddTeacher();
+            System.out.println("是否继续？（y/n）");
+            choice = stdIn.next();
+        } while ("y".equals(choice));
+    }
+
+    public static void innerAddTeacher() {
+        System.out.println("请输入工号：");
+        int id = stdIn.nextInt();
+        System.out.println("请输入姓名：");
+        String name = stdIn.next();
+        System.out.println("请输入职称：");
+        String level = stdIn.next();
+        teachers.add(new Teacher(name, "123456", id, level));
+    }
+
+    public static void addStudents() {
+        int i = 1;
+        String choice = "n";
+        do {
+            System.out.printf("请输入第%d个学生信息\n", i++);
+            innerAddTeacher();
+            System.out.println("是否继续？（y/n）");
+            choice = stdIn.next();
+        } while ("y".equals(choice));
+    }
+
+    public static void innerAddStudent() {
+        System.out.println("请输入学号：");
+        int id = stdIn.nextInt();
+        System.out.println("请输入姓名：");
+        String name = stdIn.next();
+        System.out.println("请输入年级：");
+        String grade = stdIn.next();
+        teachers.add(new Teacher(name, "123456", id, grade));
+    }
+
     public static User locateStudent() {
         System.out.println("请输入学号：");
         int id = stdIn.nextInt();
@@ -38,6 +80,26 @@ public class Users {
         }
         System.out.println("学号不存在，请重新输入");
         return null;
+    }
+
+    public static void deleteTeachers() {
+        String choice = "y";
+        while (choice.equals("y")) {
+            User t = locateTeacher();
+            teachers.remove(t);
+            System.out.println("是否继续？");
+            choice = stdIn.next();
+        }
+    }
+
+    public static void deleteStudents() {
+        String choice = "y";
+        while (choice.equals("y")) {
+            User t = locateTeacher();
+            teachers.remove(t);
+            System.out.println("是否继续？");
+            choice = stdIn.next();
+        }
     }
 
     public static User locateTeacher() {
