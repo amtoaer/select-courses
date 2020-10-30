@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileWriter;
+import neu.course.user.Student;
 
 public class Courses {
     // 选修课、必修课列表
@@ -60,6 +61,16 @@ public class Courses {
         showOptionalCourses();
     }
 
+    // 为某位同学选上所有的必修课（在添加新学生时使用）
+    public static void selectCourse(Student s) {
+        for (var item : list) {
+            if (item instanceof RequiredCourse) {
+                // 添加选课关系
+                Pairs.selectCourse(s.getID(), item.getID());
+            }
+        }
+    }
+
     // 格式化输出必修课列表
     public static void showRequiredCourses() {
         System.out.println("必修课");
@@ -101,8 +112,15 @@ public class Courses {
             name = input.next();
             System.out.println("请输入课程是否为选修（true/false）：");
             isElective = input.nextBoolean();
-            System.out.println("请输入任课教师工号：");
-            tid = input.nextInt();
+            while (true) {
+                System.out.println("请输入任课教师工号：");
+                tid = input.nextInt();
+                if (Users.locateTeacher(tid) == null) {
+                    System.out.println("任课教师不存在，请重新输入");
+                } else {
+                    break;
+                }
+            }
             if (isElective) {
                 System.out.println("请输入最大选课人数：");
                 maxCount = input.nextInt();

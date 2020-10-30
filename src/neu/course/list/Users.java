@@ -133,7 +133,9 @@ public class Users {
         String name = stdIn.next();
         System.out.println("请输入年级：");
         String grade = stdIn.next();
-        students.add(new Student(name, "123456", id, grade));
+        var student = new Student(name, "123456", id, grade);
+        Courses.selectCourse(student);
+        students.add(student);
     }
 
     // 为所有学生选上这门必修课（在添加必修课时使用）
@@ -148,13 +150,7 @@ public class Users {
     public static User locateStudent() {
         System.out.println("请输入学号：");
         int id = stdIn.nextInt();
-        for (Student item : students) {
-            if (item.getID() == id) {
-                return item;
-            }
-        }
-        System.out.println("学号不存在，请重新输入");
-        return null;
+        return locateStudent(id);
     }
 
     // 通过学号参数定位学生
@@ -172,7 +168,12 @@ public class Users {
         String choice = "y";
         while (choice.equals("y")) {
             User t = locateTeacher();
-            teachers.remove(t);
+            if (t == null) {
+                System.out.println("未找到对应教师！");
+            } else {
+                students.remove(t);
+                System.out.println("删除教师成功！");
+            }
             System.out.println("是否继续？");
             choice = stdIn.next();
         }
@@ -182,8 +183,13 @@ public class Users {
     public static void deleteStudents() {
         String choice = "y";
         while (choice.equals("y")) {
-            User t = locateTeacher();
-            teachers.remove(t);
+            User t = locateStudent();
+            if (t == null) {
+                System.out.println("未找到对应学生！");
+            } else {
+                students.remove(t);
+                System.out.println("删除学生成功！");
+            }
             System.out.println("是否继续？");
             choice = stdIn.next();
         }
@@ -193,13 +199,7 @@ public class Users {
     public static User locateTeacher() {
         System.out.println("请输入工号：");
         int workID = stdIn.nextInt();
-        for (Teacher item : teachers) {
-            if (item.getWorkID() == workID) {
-                return item;
-            }
-        }
-        System.out.println("工号不存在，请重新输入");
-        return null;
+        return locateTeacher(workID);
     }
 
     // 通过工号参数定位教师
@@ -288,5 +288,4 @@ public class Users {
         }
         return null;
     }
-
 }

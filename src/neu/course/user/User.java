@@ -20,7 +20,7 @@ public abstract class User {
     public void setPassword() {
         String first, last;
         do {
-            System.out.println("请输入新密码（16位以内）：");
+            System.out.println("请输入新密码（不支持空格）：");
             first = stdIn.next();
             System.out.println("请再次输入密码：");
             last = stdIn.next();
@@ -41,7 +41,7 @@ public abstract class User {
         return false;
     }
 
-    // 登陆
+    // 展示欢迎信息
     public abstract void showHelloMessage();
 
     // 返回用于输出的字符串
