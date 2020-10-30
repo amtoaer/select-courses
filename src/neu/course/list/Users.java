@@ -218,6 +218,7 @@ public class Users {
                 }
             };
         } while (currentUser == null);
+        currentUser.showHelloMessage();
         currentUser.showMenu();
         // 保存用户、课程、选课记录
         Users.save();

@@ -44,7 +44,7 @@ public class Teacher extends User {
                     4. 退出""");
             int choice = stdIn.nextInt();
             switch (choice) {
-                case 1 -> this.resetPassword();
+                case 1 -> this.setPassword();
                 case 2 -> {
                     Pairs.showTaughtCourses(this.workID);
                 }
