@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileWriter;
 
 public class Courses {
+    // 选修课、必修课列表
     private static List<Course> list = new ArrayList<>();
 
     private static Scanner stdIn = new Scanner(System.in);
@@ -36,12 +37,14 @@ public class Courses {
         } while ("y".equals(choice));
     }
 
+    // 输入课程编号并定位到课程
     public static Course locateCourse() {
         System.out.println("请输入课程编号：");
         int id = stdIn.nextInt();
         return locateCourse(id);
     }
 
+    // 通过参数中的课程编号定位到课程
     public static Course locateCourse(int cid) {
         for (var item : list) {
             if (item.getID() == cid) {
@@ -51,12 +54,13 @@ public class Courses {
         return null;
     }
 
+    // 分别显示必修课和选修课
     public static void show() {
         showRequiredCourses();
         showOptionalCourses();
     }
 
-    // 格式化输出课程列表
+    // 格式化输出必修课列表
     public static void showRequiredCourses() {
         System.out.println("必修课");
         System.out.printf("%-6s%-10s%-6s%-4s%-4s%-4s\n", "编号", "课程", "类型", "教师工号", "选课人数", "课程学分");
@@ -84,7 +88,7 @@ public class Courses {
         list.sort(null);
     }
 
-    // 内部的课程添加函数，从输入流中读取数据并添加课程
+    // 内部的课程添加函数，从Scanner中读取数据并添加课程
     private static void innerAddCourse(Scanner input) {
         String name;
         boolean isElective;
@@ -111,6 +115,7 @@ public class Courses {
                 score = input.nextInt();
                 // 添加授课关系
                 Pairs.teachCourse(tid, id);
+                // 选课人数初始化为0
                 RequiredCourse rc = new RequiredCourse(id, name, isElective, tid, 0, score);
                 // 为所有同学选上这门必修课
                 Users.selectCourse(rc);
@@ -133,9 +138,11 @@ public class Courses {
         }
     }
 
+    // 课程列表保存
     public static void save() {
         try {
             File course = new File("/home/amtoaer/.config/select-courses/Courses/course");
+            // 创建缺失的父路径
             course.getParentFile().mkdirs();
             var writer = new FileWriter(course);
             for (var item : list) {
@@ -147,6 +154,7 @@ public class Courses {
         }
     }
 
+    // 课程列表读取
     public static void read() {
         try {
             File course = new File("/home/amtoaer/.config/select-courses/Courses/course");

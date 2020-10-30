@@ -8,8 +8,8 @@ public abstract class User {
     protected String name;
     // 密码
     protected String pass;
-
-    protected Scanner stdIn = new Scanner(System.in);
+    // 全局的输入变量
+    protected static Scanner stdIn = new Scanner(System.in);
 
     public User(String name, String pass) {
         this.name = name;
@@ -28,6 +28,7 @@ public abstract class User {
         this.pass = first;
     }
 
+    // 重置密码
     public void resetPassword() {
         this.pass = "123456";
     }

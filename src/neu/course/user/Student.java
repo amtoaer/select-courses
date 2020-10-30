@@ -16,6 +16,7 @@ public class Student extends User {
         this.grade = grade;
     }
 
+    // 获取学生学号
     public int getID() {
         return this.id;
     }

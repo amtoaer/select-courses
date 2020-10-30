@@ -10,7 +10,9 @@ import java.util.ArrayList;
 
 // 用于存放全部的选课关系（类似数据库中间表）
 public class Pairs {
+    // 学生选课
     private static List<Pair> selectList = new ArrayList<>();
+    // 老师教课
     private static List<Pair> teachList = new ArrayList<>();
 
     // 用于选修课的选课
@@ -38,14 +40,17 @@ public class Pairs {
         selectList.add(new Pair(uid, cid));
     }
 
+    // 添加教师授课的关系
     public static void teachCourse(int tid, int cid) {
         teachList.add(new Pair(tid, cid));
     }
 
+    // 移除教师授课的关系（在修改授课教师时使用）
     public static void removeTeachCourse(int tid, int cid) {
         teachList.remove(new Pair(tid, cid));
     }
 
+    // 展示学生选修的所有课程
     public static void showSelectedCourses(int uid) {
         for (var item : selectList) {
             if (item.getFirst() == uid) {
@@ -54,6 +59,7 @@ public class Pairs {
         }
     }
 
+    // 展示教师教授的所有课程
     public static void showTaughtCourses(int tid) {
         for (var item : teachList) {
             if (item.getFirst() == tid) {
@@ -62,6 +68,7 @@ public class Pairs {
         }
     }
 
+    // 展示选修某门课的学生列表
     public static void showChosenStudents(int tid) {
         for (var item : teachList) {
             if (item.getFirst() == tid) {
@@ -75,6 +82,7 @@ public class Pairs {
         }
     }
 
+    // 将关系保存到文件
     public static void save() {
         try {
             File select = new File("/home/amtoaer/.config/select-courses/Relation/select");
@@ -95,6 +103,7 @@ public class Pairs {
         }
     }
 
+    // 从文件读取关系
     public static void read() {
         try {
             File select = new File("/home/amtoaer/.config/select-courses/Relation/select");

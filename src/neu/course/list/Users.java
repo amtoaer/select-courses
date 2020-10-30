@@ -12,12 +12,17 @@ import java.io.File;
 public class Users {
     // 管理员帐号固定
     private static User admin = new Admin("admin", "amtoaer!");
+    // 教师列表
     private static List<Teacher> teachers = new ArrayList<>();
+    // 学生列表
     private static List<Student> students = new ArrayList<>();
+    // 类内的全局输入
     private static Scanner stdIn = new Scanner(System.in);
 
+    // 当前登陆的用户
     private static User currentUser = null;
 
+    // 展示所有学生
     public static void showStudents() {
         System.out.printf("%8s\t%10s\t%10s\n", "学号", "姓名", "年级");
         for (Student item : students) {
@@ -25,6 +30,7 @@ public class Users {
         }
     }
 
+    // 展示所有教师
     public static void showTeachers() {
         System.out.printf("%8s\t%10s\t%10s\n", "工号", "姓名", "职称");
         for (Teacher item : teachers) {
@@ -32,6 +38,7 @@ public class Users {
         }
     }
 
+    // 将用户保存到文件
     public static void save() {
         try {
             var studentFile = new File("/home/amtoaer/.config/select-courses/User/student");
@@ -54,6 +61,7 @@ public class Users {
         }
     }
 
+    // 从文件读取用户
     public static void read() {
         try {
             var studentFile = new File("/home/amtoaer/.config/select-courses/User/student");
@@ -82,6 +90,7 @@ public class Users {
         }
     }
 
+    // 添加多个教师
     public static void addTeachers() {
         int i = 1;
         String choice = "n";
@@ -93,6 +102,7 @@ public class Users {
         } while ("y".equals(choice));
     }
 
+    // 添加单个教师
     public static void innerAddTeacher() {
         System.out.println("请输入工号：");
         int id = stdIn.nextInt();
@@ -103,6 +113,7 @@ public class Users {
         teachers.add(new Teacher(name, "123456", id, level));
     }
 
+    // 添加多个学生
     public static void addStudents() {
         int i = 1;
         String choice = "n";
@@ -114,6 +125,7 @@ public class Users {
         } while ("y".equals(choice));
     }
 
+    // 添加单个学生
     public static void innerAddStudent() {
         System.out.println("请输入学号：");
         int id = stdIn.nextInt();
@@ -124,7 +136,7 @@ public class Users {
         students.add(new Student(name, "123456", id, grade));
     }
 
-    // 为所有学生选上这门必修课
+    // 为所有学生选上这门必修课（在添加必修课时使用）
     public static void selectCourse(RequiredCourse rc) {
         rc.select(students.size());
         for (var item : students) {
@@ -132,6 +144,7 @@ public class Users {
         }
     }
 
+    // 输入学号并定位学生
     public static User locateStudent() {
         System.out.println("请输入学号：");
         int id = stdIn.nextInt();
@@ -144,6 +157,7 @@ public class Users {
         return null;
     }
 
+    // 通过学号参数定位学生
     public static User locateStudent(int uid) {
         for (Student item : students) {
             if (item.getID() == uid) {
@@ -153,6 +167,7 @@ public class Users {
         return null;
     }
 
+    // 删除多个教师
     public static void deleteTeachers() {
         String choice = "y";
         while (choice.equals("y")) {
@@ -163,6 +178,7 @@ public class Users {
         }
     }
 
+    // 删除多个学生
     public static void deleteStudents() {
         String choice = "y";
         while (choice.equals("y")) {
@@ -173,6 +189,7 @@ public class Users {
         }
     }
 
+    // 输入工号定位教师
     public static User locateTeacher() {
         System.out.println("请输入工号：");
         int workID = stdIn.nextInt();
@@ -185,6 +202,7 @@ public class Users {
         return null;
     }
 
+    // 通过工号参数定位教师
     public static User locateTeacher(int tid) {
         for (Teacher item : teachers) {
             if (item.getWorkID() == tid) {
@@ -200,12 +218,14 @@ public class Users {
         Users.read();
         Courses.read();
         Pairs.read();
+        // 输出登陆选项
         System.out.println("""
                 请输入您要登陆的用户种类：
                 1. 管理员
                 2. 教师
                 3. 学生""");
         int choice = stdIn.nextInt();
+        // 将登陆成功的用户赋值给当前用户（currentUser）
         do {
             currentUser = switch (choice) {
                 case 1 -> adminLogin();
@@ -217,6 +237,7 @@ public class Users {
                 }
             };
         } while (currentUser == null);
+        // 打印欢迎信息，进入用户菜单
         currentUser.showHelloMessage();
         currentUser.showMenu();
         // 保存用户、课程、选课记录

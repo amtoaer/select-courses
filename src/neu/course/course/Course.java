@@ -43,6 +43,7 @@ public abstract class Course implements Comparable<Course> {
         return toCompare.count - this.count;
     }
 
+    // 得到课程id
     public int getID() {
         return this.id;
     }

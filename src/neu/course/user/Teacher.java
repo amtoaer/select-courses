@@ -30,6 +30,7 @@ public class Teacher extends User {
         System.out.printf("%s %s 你好\n", this.name, this.level);
     }
 
+    // 获取教师工号
     public int getWorkID() {
         return workID;
     }

@@ -20,6 +20,7 @@ public class Admin extends User {
         return "";
     }
 
+    // 管理员菜单
     @Override
     public void showMenu() {
         while (true) {
