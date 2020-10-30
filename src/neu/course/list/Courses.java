@@ -4,6 +4,8 @@ import neu.course.course.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileWriter;
 
 public class Courses {
     private static List<Course> list = new ArrayList<>();
@@ -49,16 +51,26 @@ public class Courses {
         return null;
     }
 
-    // 格式化输出课程列表
     public static void show() {
-        System.out.printf("%-6s\t%-10s\t\t%-6s\t%-6s\t%-4s\t\n", "编号", "课程", "类型", "教师", "选课人数");
+        showRequiredCourses();
+        showOptionalCourses();
+    }
+
+    // 格式化输出课程列表
+    public static void showRequiredCourses() {
+        System.out.println("必修课");
+        System.out.printf("%-6s%-10s%-6s%-4s%-4s%-4s\n", "编号", "课程", "类型", "教师工号", "选课人数", "课程学分");
         for (Course item : list) {
-            System.out.println(item.show());
+            if (item instanceof RequiredCourse) {
+                System.out.println(item.show());
+            }
         }
     }
 
     // 格式化输出选修课列表
-    public static void showSelectCourses() {
+    public static void showOptionalCourses() {
+        System.out.println("选修课");
+        System.out.printf("%-6s%-10s%-6s%-4s%-4s%-4s\n", "编号", "课程", "类型", "教师工号", "选课人数", "最大选课人数");
         for (Course item : list) {
             if (item instanceof OptionalCourse) {
                 System.out.println(item.show());
@@ -94,10 +106,12 @@ public class Courses {
                 // 对于选修课，选课人数应初始化为0
                 list.add(new OptionalCourse(id, name, isElective, tid, 0, maxCount));
             } else {
-                System.out.println("请输入选修课学分：");
+                System.out.println("请输入必修课学分：");
                 score = input.nextInt();
-                // TODO: 此处的100需要是学生的总数，并且需要添加选课关系
-                list.add(new RequiredCourse(id, name, isElective, tid, 100, score));
+                RequiredCourse rc = new RequiredCourse(id, name, isElective, tid, 0, score);
+                // 为所有同学选上这门必修课
+                Users.selectCourse(rc);
+                list.add(rc);
             }
         } else {
             // 否则不输出提示信息，直接进行读取
@@ -112,6 +126,33 @@ public class Courses {
                 score = input.nextInt();
                 list.add(new RequiredCourse(id, name, isElective, tid, count, score));
             }
+        }
+    }
+
+    public static void save() {
+        try {
+            File course = new File("/home/amtoaer/.config/select-courses/Courses/course");
+            course.getParentFile().mkdirs();
+            var writer = new FileWriter(course);
+            for (var item : list) {
+                writer.write(item.toString());
+            }
+            writer.close();
+        } catch (Exception e) {
+            System.out.println("保存课程到文件失败");
+        }
+    }
+
+    public static void read() {
+        try {
+            File course = new File("/home/amtoaer/.config/select-courses/Courses/course");
+            Scanner input = new Scanner(course);
+            while (input.hasNext()) {
+                innerAddCourse(input);
+            }
+            input.close();
+        } catch (Exception e) {
+            System.out.println("从文件读取课程失败");
         }
     }
 }

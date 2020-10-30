@@ -16,13 +16,13 @@ public class Teacher extends User {
     }
 
     @Override
-    public String toString() {
+    public String show() {
         return String.format("%8d %10s %10s", this.workID, this.name, this.level);
     }
 
     @Override
-    public String show() {
-        return String.format("%d %s %s", this.workID, this.name, this.level);
+    public String toString() {
+        return String.format("%d %s %s %s", this.workID, this.name, this.pass, this.level);
     }
 
     @Override

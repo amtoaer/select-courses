@@ -2,6 +2,7 @@ package neu.course.user;
 
 import neu.course.list.Courses;
 import neu.course.list.Users;
+import neu.course.course.Course;
 
 public class Admin extends User {
     public Admin(String name, String pass) {
@@ -43,6 +44,10 @@ public class Admin extends User {
                 case 2 -> Courses.multiDel();
                 case 3 -> Courses.sort();
                 case 4 -> Courses.show();
+                case 5 -> {
+                    Course c = Courses.locateCourse();
+                    c.changeTeacher();
+                }
                 case 6 -> Users.showStudents();
                 case 7 -> Users.showTeachers();
                 case 8 -> {

@@ -1,5 +1,6 @@
 package neu.course.list;
 
+import neu.course.course.RequiredCourse;
 import neu.course.user.*;
 import java.util.Scanner;
 import java.util.List;
@@ -36,7 +37,7 @@ public class Users {
             var studentFile = new File("/home/amtoaer/.config/select-courses/User/student");
             var teacherFile = new File("/home/amtoaer/.config/select-courses/User/teacher");
             // 创建需要的所有父目录
-            studentFile.mkdirs();
+            studentFile.getParentFile().mkdirs();
             // 使用FileWriter写入所有数据（文件不存在自动创建）
             var stu = new FileWriter(studentFile);
             var tea = new FileWriter(teacherFile);
@@ -50,6 +51,35 @@ public class Users {
             tea.close();
         } catch (Exception e) {
             System.out.println("保存用户信息到文件失败");
+        }
+    }
+
+    public static void read() {
+        try {
+            var studentFile = new File("/home/amtoaer/.config/select-courses/User/student");
+            var teacherFile = new File("/home/amtoaer/.config/select-courses/User/teacher");
+
+            var stu = new Scanner(studentFile);
+            var tea = new Scanner(teacherFile);
+            while (stu.hasNext()) {
+                int id = stu.nextInt();
+                String name = stu.next();
+                String pass = stu.next();
+                String grade = stu.next();
+                students.add(new Student(name, pass, id, grade));
+            }
+            stu.close();
+            while (tea.hasNext()) {
+                int workID = tea.nextInt();
+                String name = tea.next();
+                String pass = tea.next();
+                String level = tea.next();
+                teachers.add(new Teacher(name, pass, workID, level));
+            }
+            tea.close();
+        } catch (Exception e) {
+            System.out.println("从文件读取用户信息失败");
+            e.printStackTrace();
         }
     }
 
@@ -79,7 +109,7 @@ public class Users {
         String choice = "n";
         do {
             System.out.printf("请输入第%d个学生信息\n", i++);
-            innerAddTeacher();
+            innerAddStudent();
             System.out.println("是否继续？（y/n）");
             choice = stdIn.next();
         } while ("y".equals(choice));
@@ -92,7 +122,15 @@ public class Users {
         String name = stdIn.next();
         System.out.println("请输入年级：");
         String grade = stdIn.next();
-        teachers.add(new Teacher(name, "123456", id, grade));
+        students.add(new Student(name, "123456", id, grade));
+    }
+
+    // 为所有学生选上这门必修课
+    public static void selectCourse(RequiredCourse rc) {
+        rc.select(students.size());
+        for (var item : students) {
+            Pairs.selectRequiredCourse(item.getID(), rc.getID());
+        }
     }
 
     public static User locateStudent() {
@@ -148,8 +186,21 @@ public class Users {
         return null;
     }
 
+    public static User locateTeacher(int tid) {
+        for (Teacher item : teachers) {
+            if (item.getWorkID() == tid) {
+                return item;
+            }
+        }
+        return null;
+    }
+
     // 登陆菜单
     public static void showMenu() {
+        // 读入用户、课程、选课记录
+        Users.read();
+        Courses.read();
+        Pairs.read();
         System.out.println("""
                 请输入您要登陆的用户种类：
                 1. 管理员
@@ -168,6 +219,10 @@ public class Users {
             };
         } while (currentUser == null);
         currentUser.showMenu();
+        // 保存用户、课程、选课记录
+        Users.save();
+        Courses.save();
+        Pairs.save();
     }
 
     // 管理员登陆

@@ -22,7 +22,7 @@ public class Student extends User {
 
     @Override
     public String toString() {
-        return String.format("%d %s %s", this.id, this.name, this.grade);
+        return String.format("%d %s %s %s %s\n", this.id, this.name, this.pass, this.grade);
     }
 
     @Override
@@ -35,7 +35,6 @@ public class Student extends User {
         System.out.printf("%s %s 你好\n", this.grade, this.name);
     }
 
-    // TODO: 学生菜单
     @Override
     public void showMenu() {
         while (true) {
@@ -51,7 +50,7 @@ public class Student extends User {
                     Pairs.showSelectedCourses(this.id);
                 }
                 case 3 -> {
-                    Courses.showSelectCourses();
+                    Courses.showOptionalCourses();
                     System.out.println("请输入课程编号：");
                     int cid = stdIn.nextInt();
                     Pairs.selectCourse(this.id, cid);

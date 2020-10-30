@@ -5,6 +5,7 @@ import neu.course.relation.Pair;
 import java.io.FileWriter;
 import java.util.List;
 import java.io.File;
+import java.util.Scanner;
 import java.util.ArrayList;
 
 // 用于存放全部的选课关系（类似数据库中间表）
@@ -12,6 +13,7 @@ public class Pairs {
     private static List<Pair> selectList = new ArrayList<>();
     private static List<Pair> teachList = new ArrayList<>();
 
+    // 用于选修课的选课
     public static void selectCourse(int uid, int cid) {
         var tmp = new Pair(uid, cid);
         if (selectList.contains(tmp)) {
@@ -31,8 +33,17 @@ public class Pairs {
         }
     }
 
+    // 用于必修课的选课
+    public static void selectRequiredCourse(int uid, int cid) {
+        selectList.add(new Pair(uid, cid));
+    }
+
     public static void teachCourse(int tid, int cid) {
         teachList.add(new Pair(tid, cid));
+    }
+
+    public static void removeTeachCourse(int tid, int cid) {
+        teachList.remove(new Pair(tid, cid));
     }
 
     public static void showSelectedCourses(int uid) {
@@ -68,7 +79,7 @@ public class Pairs {
         try {
             File select = new File("/home/amtoaer/.config/select-courses/Relation/select");
             File teach = new File("/home/amtoaer/.config/select-courses/Relation/teach");
-            select.mkdirs();
+            select.getParentFile().mkdirs();
             var sel = new FileWriter(select);
             var tea = new FileWriter(teach);
             for (var item : selectList) {
@@ -81,6 +92,29 @@ public class Pairs {
             tea.close();
         } catch (Exception e) {
             System.out.println("保存关系到文件失败");
+        }
+    }
+
+    public static void read() {
+        try {
+            File select = new File("/home/amtoaer/.config/select-courses/Relation/select");
+            File teach = new File("/home/amtoaer/.config/select-courses/Relation/teach");
+            var sel = new Scanner(select);
+            var tea = new Scanner(teach);
+            while (sel.hasNext()) {
+                int first = sel.nextInt();
+                int last = sel.nextInt();
+                selectList.add(new Pair(first, last));
+            }
+            sel.close();
+            while (tea.hasNext()) {
+                int first = tea.nextInt();
+                int last = tea.nextInt();
+                teachList.add(new Pair(first, last));
+            }
+            tea.close();
+        } catch (Exception e) {
+            System.out.println("从文件读取关系失败");
         }
     }
 }
