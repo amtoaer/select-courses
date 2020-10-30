@@ -34,14 +34,13 @@ public class Teacher extends User {
         return workID;
     }
 
-    // TODO: 教师菜单
     @Override
     public void showMenu() {
         while (true) {
             System.out.println("""
                     1. 修改登陆密码
                     2. 查看教授课程
-                    3. 选修课选课
+                    3. 查看所授课程的学生列表
                     4. 退出""");
             int choice = stdIn.nextInt();
             switch (choice) {
@@ -50,7 +49,7 @@ public class Teacher extends User {
                     Pairs.showTaughtCourses(this.workID);
                 }
                 case 3 -> {
-
+                    Pairs.showChosenStudents(this.workID);
                 }
                 case 4 -> {
                     return;

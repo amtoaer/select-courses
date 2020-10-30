@@ -1,5 +1,6 @@
 package neu.course.list;
 
+import neu.course.course.OptionalCourse;
 import neu.course.relation.Pair;
 import java.util.List;
 import java.util.ArrayList;
@@ -15,7 +16,17 @@ public class Pairs {
             System.out.println("你已经选修过这门课！");
             return;
         }
-        selectList.add(tmp);
+        if (Courses.locateCourse(cid) instanceof OptionalCourse) {
+            OptionalCourse oc = (OptionalCourse) Courses.locateCourse(cid);
+            if (oc.select()) {
+                selectList.add(tmp);
+                System.out.println("选课成功！");
+            } else {
+                System.out.println("这门课选课人数已满！");
+            }
+        } else {
+            System.out.println("这门课是必修课！");
+        }
     }
 
     public static void teachCourse(int tid, int cid) {
@@ -38,10 +49,15 @@ public class Pairs {
         }
     }
 
-    public static void showChosenStudents(int cid) {
-        for (var item : selectList) {
-            if (item.getLast() == cid) {
-                System.out.println(Users.locateStudent(item.getFirst()).show());
+    public static void showChosenStudents(int tid) {
+        for (var item : teachList) {
+            if (item.getFirst() == tid) {
+                int cid = item.getLast();
+                for (var innerItem : selectList) {
+                    if (cid == innerItem.getLast()) {
+                        System.out.println(Users.locateStudent(innerItem.getFirst()).show());
+                    }
+                }
             }
         }
     }
