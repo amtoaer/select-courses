@@ -22,7 +22,7 @@ public class Student extends User {
 
     @Override
     public String toString() {
-        return String.format("%d %s %s %s %s\n", this.id, this.name, this.pass, this.grade);
+        return String.format("%d %s %s %s\n", this.id, this.name, this.pass, this.grade);
     }
 
     @Override

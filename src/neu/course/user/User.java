@@ -18,15 +18,13 @@ public abstract class User {
 
     // 设置用户密码
     public void setPassword() {
-        Scanner input = new Scanner(System.in);
         String first, last;
         do {
             System.out.println("请输入新密码（16位以内）：");
-            first = input.next();
+            first = stdIn.next();
             System.out.println("请再次输入密码：");
-            last = input.next();
+            last = stdIn.next();
         } while (!first.equals(last) || first.length() > 16);
-        input.close();
         this.pass = first;
     }
 

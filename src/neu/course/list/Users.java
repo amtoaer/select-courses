@@ -79,7 +79,6 @@ public class Users {
             tea.close();
         } catch (Exception e) {
             System.out.println("从文件读取用户信息失败");
-            e.printStackTrace();
         }
     }
 
@@ -231,7 +230,6 @@ public class Users {
         System.out.println("请输入管理员密码：");
         String pass = stdIn.next();
         if (admin.login(pass)) {
-            admin.showHelloMessage();
             return admin;
         }
         System.out.println("密码错误，请重试");

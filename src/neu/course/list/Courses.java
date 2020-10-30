@@ -86,12 +86,13 @@ public class Courses {
 
     // 内部的课程添加函数，从输入流中读取数据并添加课程
     private static void innerAddCourse(Scanner input) {
-        int id = list.size() + 1;
         String name;
         boolean isElective;
-        int count, maxCount, tid, score;
+        int count, maxCount, tid, score, id;
         // 从标准输入中读取时才需要输出提示信息
         if (stdIn.equals(input)) {
+            System.out.println("请输入课程编号：");
+            id = input.nextInt();
             System.out.println("请输入课程名：");
             name = input.next();
             System.out.println("请输入课程是否为选修（true/false）：");
@@ -108,6 +109,8 @@ public class Courses {
             } else {
                 System.out.println("请输入必修课学分：");
                 score = input.nextInt();
+                // 添加授课关系
+                Pairs.teachCourse(tid, id);
                 RequiredCourse rc = new RequiredCourse(id, name, isElective, tid, 0, score);
                 // 为所有同学选上这门必修课
                 Users.selectCourse(rc);
@@ -115,6 +118,7 @@ public class Courses {
             }
         } else {
             // 否则不输出提示信息，直接进行读取
+            id = input.nextInt();
             name = input.next();
             isElective = input.nextBoolean();
             tid = input.nextInt();
