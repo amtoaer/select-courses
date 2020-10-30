@@ -2,7 +2,9 @@ package neu.course.list;
 
 import neu.course.course.OptionalCourse;
 import neu.course.relation.Pair;
+import java.io.FileWriter;
 import java.util.List;
+import java.io.File;
 import java.util.ArrayList;
 
 // 用于存放全部的选课关系（类似数据库中间表）
@@ -62,4 +64,23 @@ public class Pairs {
         }
     }
 
+    public static void save() {
+        try {
+            File select = new File("/home/amtoaer/.config/select-courses/Relation/select");
+            File teach = new File("/home/amtoaer/.config/select-courses/Relation/teach");
+            select.mkdirs();
+            var sel = new FileWriter(select);
+            var tea = new FileWriter(teach);
+            for (var item : selectList) {
+                sel.write(item.toString());
+            }
+            sel.close();
+            for (var item : teachList) {
+                tea.write(item.toString());
+            }
+            tea.close();
+        } catch (Exception e) {
+            System.out.println("保存关系到文件失败");
+        }
+    }
 }

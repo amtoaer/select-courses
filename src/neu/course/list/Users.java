@@ -3,7 +3,10 @@ package neu.course.list;
 import neu.course.user.*;
 import java.util.Scanner;
 import java.util.List;
+
+import java.io.FileWriter;
 import java.util.ArrayList;
+import java.io.File;
 
 public class Users {
     // 管理员帐号固定
@@ -25,6 +28,28 @@ public class Users {
         System.out.printf("%8s\t%10s\t%10s\n", "工号", "姓名", "职称");
         for (Teacher item : teachers) {
             System.out.println(item.show());
+        }
+    }
+
+    public static void save() {
+        try {
+            var studentFile = new File("/home/amtoaer/.config/select-courses/User/student");
+            var teacherFile = new File("/home/amtoaer/.config/select-courses/User/teacher");
+            // 创建需要的所有父目录
+            studentFile.mkdirs();
+            // 使用FileWriter写入所有数据（文件不存在自动创建）
+            var stu = new FileWriter(studentFile);
+            var tea = new FileWriter(teacherFile);
+            for (var item : students) {
+                stu.write(item.toString());
+            }
+            stu.close();
+            for (var item : teachers) {
+                tea.write(item.toString());
+            }
+            tea.close();
+        } catch (Exception e) {
+            System.out.println("保存用户信息到文件失败");
         }
     }
 

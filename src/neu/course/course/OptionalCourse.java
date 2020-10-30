@@ -22,7 +22,11 @@ public class OptionalCourse extends Course {
 
     @Override
     public String show() {
-        super.show();
         return super.show() + String.format("%-4d", this.maxStudentCount);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + String.format(" %d\n", this.maxStudentCount);
     }
 }

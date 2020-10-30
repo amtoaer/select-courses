@@ -1,6 +1,6 @@
 package neu.course.course;
 
-public class Course implements Comparable<Course> {
+public abstract class Course implements Comparable<Course> {
     // 课程编号
     protected int id;
     // 课程名称

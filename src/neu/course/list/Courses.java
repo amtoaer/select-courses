@@ -77,7 +77,7 @@ public class Courses {
         int id = list.size() + 1;
         String name;
         boolean isElective;
-        int count, maxCount, tid;
+        int count, maxCount, tid, score;
         // 从标准输入中读取时才需要输出提示信息
         if (stdIn.equals(input)) {
             System.out.println("请输入课程名：");
@@ -86,14 +86,18 @@ public class Courses {
             isElective = input.nextBoolean();
             System.out.println("请输入任课教师工号：");
             tid = input.nextInt();
-            System.out.println("请输入选课人数：");
-            count = input.nextInt();
             if (isElective) {
                 System.out.println("请输入最大选课人数：");
                 maxCount = input.nextInt();
-                list.add(new OptionalCourse(id, name, isElective, tid, count, maxCount));
+                // 添加授课关系
+                Pairs.teachCourse(tid, id);
+                // 对于选修课，选课人数应初始化为0
+                list.add(new OptionalCourse(id, name, isElective, tid, 0, maxCount));
             } else {
-                list.add(new Course(id, name, isElective, tid, count));
+                System.out.println("请输入选修课学分：");
+                score = input.nextInt();
+                // TODO: 此处的100需要是学生的总数，并且需要添加选课关系
+                list.add(new RequiredCourse(id, name, isElective, tid, 100, score));
             }
         } else {
             // 否则不输出提示信息，直接进行读取
@@ -105,7 +109,8 @@ public class Courses {
                 maxCount = input.nextInt();
                 list.add(new OptionalCourse(id, name, isElective, tid, count, maxCount));
             } else {
-                list.add(new Course(id, name, isElective, tid, count));
+                score = input.nextInt();
+                list.add(new RequiredCourse(id, name, isElective, tid, count, score));
             }
         }
     }
