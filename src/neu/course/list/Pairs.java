@@ -45,13 +45,24 @@ public class Pairs {
         teachList.add(new Pair(tid, cid));
     }
 
-    // 移除教师授课的关系（在修改授课教师时使用）
+    // 移除教师授课的关系（在修改授课教师、删除教师、删除课程时使用）
     public static void removeTeachCourse(int tid, int cid) {
         teachList.remove(new Pair(tid, cid));
     }
 
+    // 移除教师对某个课程授课的关系
+    public static void removeTeachCourse(int cid) {
+        teachList.removeIf(i -> i.getLast() == cid);
+    }
+
+    // 移除学生选课的关系（在删除学生、删除课程时使用）
+    public static void removeSelectCourse(int uid, int cid) {
+        selectList.remove(new Pair(uid, cid));
+    }
+
     // 展示学生选修的所有课程
     public static void showSelectedCourses(int uid) {
+        System.out.printf("%-6s%-20s%-6s%-15s%-8s%-8s\n", "编号", "课程", "类型", "教师工号", "选课人数", "课程学分/最大选课人数");
         for (var item : selectList) {
             if (item.getFirst() == uid) {
                 System.out.println(Courses.locateCourse(item.getLast()).show());
@@ -61,6 +72,7 @@ public class Pairs {
 
     // 展示教师教授的所有课程
     public static void showTaughtCourses(int tid) {
+        System.out.printf("%-6s%-20s%-6s%-15s%-8s%-8s\n", "编号", "课程", "类型", "教师工号", "选课人数", "课程学分/最大选课人数");
         for (var item : teachList) {
             if (item.getFirst() == tid) {
                 System.out.println(Courses.locateCourse(item.getLast()).show());
@@ -68,11 +80,34 @@ public class Pairs {
         }
     }
 
+    // 删除教师教授的所有课程和授课关系
+    public static void deleteTaughtCourses(int tid) {
+        for (var item : teachList) {
+            if (item.getFirst() == tid) {
+                // 删除课程和学生对这门课的选课记录
+                Courses.deleteCourse(Courses.locateCourse(item.getLast()));
+            }
+        }
+        // 删除教课关系
+        selectList.removeIf(i -> i.getFirst() == tid);
+    }
+
+    // 删除学生的所有选课记录并撤销选课（删除学生时使用）
+    public static void deleteSelectCourses(int uid) {
+        for (var item : selectList) {
+            if (item.getFirst() == uid) {
+                Courses.locateCourse(item.getLast()).unselect();
+            }
+        }
+        selectList.removeIf(i -> i.getFirst() == uid);
+    }
+
     // 展示选修某门课的学生列表
     public static void showChosenStudents(int tid) {
         for (var item : teachList) {
             if (item.getFirst() == tid) {
                 int cid = item.getLast();
+                System.out.println(Courses.locateCourse(cid).getName());
                 for (var innerItem : selectList) {
                     if (cid == innerItem.getLast()) {
                         System.out.println(Users.locateStudent(innerItem.getFirst()).show());

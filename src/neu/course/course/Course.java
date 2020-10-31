@@ -34,7 +34,7 @@ public abstract class Course implements Comparable<Course> {
     // 用于展示（与toString的不同是设定了宽度，使用了制表符）
     public String show() {
         String type = isElective ? "选修" : "必修";
-        return String.format("%-6d%-10s%-6s%-4d%-4d", this.id, this.name, type, this.tid, this.count);
+        return String.format("%-6d%-20s%-6s%-15d%-8d", this.id, this.name, type, this.tid, this.count);
     }
 
     // 覆盖实现比较方法，用于调用List.sort()
@@ -48,8 +48,17 @@ public abstract class Course implements Comparable<Course> {
         return this.id;
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     // 选课方法
     public abstract boolean select();
+
+    public boolean unselect() {
+        this.count--;
+        return true;
+    }
 
     // 修改授课教师
     public void changeTeacher() {

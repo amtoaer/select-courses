@@ -8,6 +8,7 @@ import java.util.List;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.io.File;
+import neu.course.course.Course;
 
 public class Users {
     // 管理员帐号固定
@@ -146,15 +147,22 @@ public class Users {
         }
     }
 
+    // 为所有学生删除这门课（在删除课程时使用）
+    public static void removeCourse(Course c) {
+        for (var item : students) {
+            Pairs.removeSelectCourse(item.getID(), c.getID());
+        }
+    }
+
     // 输入学号并定位学生
-    public static User locateStudent() {
+    public static Student locateStudent() {
         System.out.println("请输入学号：");
         int id = stdIn.nextInt();
         return locateStudent(id);
     }
 
     // 通过学号参数定位学生
-    public static User locateStudent(int uid) {
+    public static Student locateStudent(int uid) {
         for (Student item : students) {
             if (item.getID() == uid) {
                 return item;
@@ -167,11 +175,14 @@ public class Users {
     public static void deleteTeachers() {
         String choice = "y";
         while (choice.equals("y")) {
-            User t = locateTeacher();
+            Teacher t = locateTeacher();
             if (t == null) {
                 System.out.println("未找到对应教师！");
             } else {
-                students.remove(t);
+                // 删除教师讲授的所有课程和选课关系、授课关系
+                Pairs.deleteTaughtCourses(t.getWorkID());
+                // 移除这位教师
+                teachers.remove(t);
                 System.out.println("删除教师成功！");
             }
             System.out.println("是否继续？");
@@ -183,10 +194,11 @@ public class Users {
     public static void deleteStudents() {
         String choice = "y";
         while (choice.equals("y")) {
-            User t = locateStudent();
+            Student t = locateStudent();
             if (t == null) {
                 System.out.println("未找到对应学生！");
             } else {
+                Pairs.deleteSelectCourses(t.getID());
                 students.remove(t);
                 System.out.println("删除学生成功！");
             }
@@ -196,14 +208,14 @@ public class Users {
     }
 
     // 输入工号定位教师
-    public static User locateTeacher() {
+    public static Teacher locateTeacher() {
         System.out.println("请输入工号：");
         int workID = stdIn.nextInt();
         return locateTeacher(workID);
     }
 
     // 通过工号参数定位教师
-    public static User locateTeacher(int tid) {
+    public static Teacher locateTeacher(int tid) {
         for (Teacher item : teachers) {
             if (item.getWorkID() == tid) {
                 return item;

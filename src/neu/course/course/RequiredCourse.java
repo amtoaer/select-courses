@@ -17,7 +17,7 @@ public class RequiredCourse extends Course {
     // 返回用于展示的格式化后的字符串
     @Override
     public String show() {
-        return super.show() + String.format("%-4d", this.score);
+        return super.show() + String.format("%-8d", this.score);
     }
 
     // 必修课选课只需要给选课人数+1即可

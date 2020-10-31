@@ -32,10 +32,20 @@ public class Courses {
         String choice = "n";
         do {
             System.out.printf("正在删除第%d个课程\n", i++);
-            list.remove(locateCourse());
+            Course c = locateCourse();
+            Pairs.removeTeachCourse(c.getID());
+            deleteCourse(c);
             System.out.println("是否继续？（y/n）");
             choice = stdIn.next();
         } while ("y".equals(choice));
+    }
+
+    // 删除特定课程
+    public static void deleteCourse(Course c) {
+        // 为所有学生删除这门课
+        Users.removeCourse(c);
+        // 移除这门课
+        list.remove(c);
     }
 
     // 输入课程编号并定位到课程
@@ -66,7 +76,8 @@ public class Courses {
         for (var item : list) {
             if (item instanceof RequiredCourse) {
                 // 添加选课关系
-                Pairs.selectCourse(s.getID(), item.getID());
+                Pairs.selectRequiredCourse(s.getID(), item.getID());
+                item.select();
             }
         }
     }
@@ -74,7 +85,7 @@ public class Courses {
     // 格式化输出必修课列表
     public static void showRequiredCourses() {
         System.out.println("必修课");
-        System.out.printf("%-6s%-10s%-6s%-4s%-4s%-4s\n", "编号", "课程", "类型", "教师工号", "选课人数", "课程学分");
+        System.out.printf("%-6s%-20s%-6s%-15s%-8s%-8s\n", "编号", "课程", "类型", "教师工号", "选课人数", "课程学分");
         for (Course item : list) {
             if (item instanceof RequiredCourse) {
                 System.out.println(item.show());
@@ -85,7 +96,7 @@ public class Courses {
     // 格式化输出选修课列表
     public static void showOptionalCourses() {
         System.out.println("选修课");
-        System.out.printf("%-6s%-10s%-6s%-4s%-4s%-4s\n", "编号", "课程", "类型", "教师工号", "选课人数", "最大选课人数");
+        System.out.printf("%-6s%-20s%-6s%-15s%-8s%-8s\n", "编号", "课程", "类型", "教师工号", "选课人数", "最大选课人数");
         for (Course item : list) {
             if (item instanceof OptionalCourse) {
                 System.out.println(item.show());
